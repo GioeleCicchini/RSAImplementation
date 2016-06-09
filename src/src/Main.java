@@ -14,7 +14,7 @@ public class Main  {
     public static void main(String [] args)
     {
 
-        String messaggioStringa = "sampei";
+        String messaggioStringa = "ciaocomevabene";
 
 
         TextEncripter messaggio = new TextEncripter(messaggioStringa);
