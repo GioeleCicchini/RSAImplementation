@@ -1,24 +1,20 @@
-package src;
+package src.Util;
 
 import java.math.BigInteger;
 
 /**
  * Created by Gioele on 09/06/2016.
  */
-public class TextDecripter {
+public class NumericTextDecripter {
 
 
     private String messaggioDecriptatoStringa= "";
 
-    public TextDecripter(BigInteger messaggio){
+    public NumericTextDecripter(String messaggio){
 
-        String messaggioStringa=messaggio.toString();
 
-        if(messaggioStringa.length()%3 != 0 ){
-            messaggioStringa= "0"+messaggioStringa;
-        }
 
-        String[] parts = messaggioStringa.split("(?<=\\G...)");
+        String[] parts = messaggio.split("(?<=\\G...)");
 
         for(int i=0; i<parts.length ; i++){
             char c = (char)Integer.parseInt(parts[i]);

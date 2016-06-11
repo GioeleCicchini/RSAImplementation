@@ -1,139 +1,72 @@
 package Soggetti;
 
-import src.MillerRabin;
+import src.Util.KeyGenerator;
+import src.Util.MillerRabin;
 
 import java.math.BigInteger;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Created by Gioele on 09/06/2016.
  */
-public class Bob {
+public class Bob implements  Utente{
 
-    private static final BigInteger ZERO = BigInteger.ZERO;
-    private static final BigInteger n = new BigInteger("100000000000000000000000000000000000000000000000000");
+    private Map<String,BigInteger> chiavePrivata = null;
+    private Map<String,BigInteger> chiavePubblica = null;
 
-    private BigInteger P;
-    private BigInteger Q;
-    private BigInteger N;
-    private BigInteger E;
-    private BigInteger D;
-
-    public Bob(){}
-
-
-
-    public void Inizializza(){
-
-
-
-
-
-
-
-
-
-        P = getPrime();
-        BigInteger PmenoUno = P.subtract(new BigInteger("1"));
-
-        Q = getPrime();
-        BigInteger QmenoUno = Q.subtract(new BigInteger("1"));
-
-        BigInteger PQmenoUno= PmenoUno.multiply(QmenoUno);
-        N = P.multiply(Q);
-
-        E=PQmenoUno.subtract(new BigInteger("1"));
-
-
-        System.out.println("Bob Sceglie due primi p e q segreti e calcola n= p*q");
-        System.out.println("P: "+P+" Q: "+Q);
-        System.out.println("N : "+N);
-
-        System.out.println("Bob Sceglie E con MCD(e,(p-1)*(q-1))=1");
-        System.out.println("E : "+E);
-
-        D = E.modInverse(PQmenoUno);
-
-        System.out.println("Bob Calcola d");
-        System.out.println("D: "+D);
-
-
+    public Bob(){
 
     }
 
 
-    public BigInteger decifraMessaggio(BigInteger C){
+    public String decifraMessaggio(String C){
 
-       BigInteger messaggioDecifrato = C.modPow(D,N);
+       chiavePrivata=KeyGenerator.getSingletonInstance().getChiavePrivata();
+
+       List<BigInteger> messaggioCriptatoBlocchi;
+        String messaggioDecifrato = "";
+
+        int lunghezzaBlocchi = KeyGenerator.getSingletonInstance().getLunghezzaN();
+
+
+       messaggioCriptatoBlocchi = getParts(C,lunghezzaBlocchi);
+        for(int i=0;i<messaggioCriptatoBlocchi.size();i++){
+            BigInteger messaggioDecifratoBlocco = messaggioCriptatoBlocchi.get(i).modPow(chiavePrivata.get("D"),chiavePrivata.get("N"));
+
+            String m = messaggioDecifratoBlocco.toString();
+            if(m.length()%3 != 0 ){
+                m = "0"+m;
+            }
+            messaggioDecifrato = messaggioDecifrato +m;
+        }
+
         return messaggioDecifrato;
     }
 
 
+    @Override
+    public void inviaChiavePubblica(Map<String, BigInteger> ChiavePubblica, Utente utente) {
+
+        utente.ImpostaChiavePubblica(ChiavePubblica);
 
 
-    public BigInteger getQ() {
-        return Q;
     }
 
-    public void setQ(BigInteger q) {
-        Q = q;
-    }
+    @Override
+    public void ImpostaChiavePubblica(Map<String, BigInteger> ChiavePubblica) {
 
-    public BigInteger getP() {
-        return P;
-    }
+        this.chiavePubblica = ChiavePubblica;
 
-    public void setP(BigInteger p) {
-        P = p;
-    }
-
-    public BigInteger getN() {
-        return N;
-    }
-
-    public void setN(BigInteger n) {
-        N = n;
-    }
-
-    public BigInteger getE() {
-        return E;
-    }
-
-    public void setE(BigInteger e) {
-        E = e;
-    }
-
-    public BigInteger getD() {
-        return D;
-    }
-
-    public void setD(BigInteger d) {
-        D = d;
     }
 
 
-
-    public BigInteger getPrime(){
-
-        MillerRabin millerRabin = new MillerRabin();
-        Random random = new Random();
-        BigInteger r;
-
-        do {
-            r = new BigInteger(n.bitLength(), random);
-        }while (!(r.mod(new BigInteger("2")) != ZERO));
-
-
-        while(millerRabin.isProbablePrime(r,2) == false) {
-            do {
-                do {
-                    r = new BigInteger(n.bitLength(), random);
-                }while (!(r.mod(new BigInteger("2")) != ZERO));
-            } while (r.compareTo(n) >= 0);
+    private static List<BigInteger> getParts(String string, int partitionSize) {
+        List<BigInteger> parts = new ArrayList<>();
+        int len = string.length();
+        for (int i=0; i<len; i+=partitionSize)
+        {
+            parts.add(new BigInteger(string.substring(i, Math.min(len, i + partitionSize))));
         }
-
-        System.out.println("Il Numero Casuale    :  " + r + " è primo ");
-        return r;
+        return parts;
     }
-
 }

@@ -1,61 +1,54 @@
 package Soggetti;
 
+import src.Util.KeyGenerator;
+
 import java.math.BigInteger;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Gioele on 09/06/2016.
  */
-public class Alice {
+public class Alice implements Utente{
 
-
-    private BigInteger N ;
-    private BigInteger E ;
-
-    private BigInteger messaggio;
+    private List<BigInteger> messaggioNumerico;
     private String messaggioStringa;
 
     public Alice(){}
 
+    private Map<String,BigInteger> chiavePubblica = null;
 
 
 
-    public void setChiavePubblica(BigInteger n,BigInteger e){
-        this.N = n;
-        this.E = e;
-    }
+    public String criptaMessaggio(){
 
-    public BigInteger criptaMessaggio(){
+        String messaggioCifrato = "";
+        String messaggioCifratoBloccoString;
 
-        BigInteger messaggioCifrato = messaggio.modPow(E,N);
+        for(int i=0;i<messaggioNumerico.size();i++){
+            BigInteger messaggioCifratoBlocco = messaggioNumerico.get(i).modPow(chiavePubblica.get("E"), chiavePubblica.get("N"));
+            messaggioCifratoBloccoString = messaggioCifratoBlocco.toString();
+
+            if(messaggioCifratoBloccoString.length() < KeyGenerator.getSingletonInstance().getLunghezzaN()){
+                for(int j=0;j<(KeyGenerator.getSingletonInstance().getLunghezzaN()-messaggioCifratoBloccoString.length()+1);j++){
+                    messaggioCifratoBloccoString = "0"+messaggioCifratoBloccoString;
+                }
+            }
+
+            messaggioCifrato = messaggioCifrato +messaggioCifratoBloccoString;
+        }
+
 
         return  messaggioCifrato;
     }
 
 
-
-
-    public BigInteger getN() {
-        return N;
+    public List<BigInteger> getMessaggioNumerico() {
+        return messaggioNumerico;
     }
 
-    public void setN(BigInteger n) {
-        N = n;
-    }
-
-    public BigInteger getE() {
-        return E;
-    }
-
-    public void setE(BigInteger e) {
-        E = e;
-    }
-
-    public BigInteger getMessaggio() {
-        return messaggio;
-    }
-
-    public void setMessaggio(BigInteger messaggio) {
-        this.messaggio = messaggio;
+    public void setMessaggioNumerico(List<BigInteger> messaggioNumerico) {
+        this.messaggioNumerico = messaggioNumerico;
     }
 
     public String getMessaggioStringa() {
@@ -64,5 +57,16 @@ public class Alice {
 
     public void setMessaggioStringa(String messaggioStringa) {
         this.messaggioStringa = messaggioStringa;
+    }
+
+
+    @Override
+    public void inviaChiavePubblica(Map<String, BigInteger> ChiavePubblica, Utente utente) {
+
+    }
+
+    @Override
+    public void ImpostaChiavePubblica(Map<String, BigInteger> ChiavePubblica) {
+        this.chiavePubblica = ChiavePubblica;
     }
 }
