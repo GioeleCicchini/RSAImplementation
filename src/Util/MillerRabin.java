@@ -1,4 +1,4 @@
-package src.Util;
+package Util;
 
 import java.math.BigInteger;
 import java.util.Random;

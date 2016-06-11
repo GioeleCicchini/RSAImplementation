@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="490.0" prefWidth="938.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Ui.Controllers.controller">
+   <children>
+      <HBox prefHeight="85.0" prefWidth="871.0">
+         <children>
+            <Label prefHeight="32.0" prefWidth="83.0" text="Nome Utente">
+               <HBox.margin>
+                  <Insets left="30.0" top="5.0" />
+               </HBox.margin>
+            </Label>
+            <TextField fx:id="nomeUtente" prefHeight="25.0" prefWidth="98.0">
+               <HBox.margin>
+                  <Insets right="20.0" top="10.0" />
+               </HBox.margin>
+            </TextField>
+            <Label prefHeight="32.0" prefWidth="83.0" text="Indirizzo Ip">
+               <HBox.margin>
+                  <Insets top="5.0" />
+               </HBox.margin>
+            </Label>
+            <TextField fx:id="indirizzoIp" prefHeight="25.0" prefWidth="98.0" text="127.0.0.1">
+               <HBox.margin>
+                  <Insets right="20.0" top="10.0" />
+               </HBox.margin>
+            </TextField>
+            <Label prefHeight="32.0" prefWidth="83.0" text="Porta Invio">
+               <HBox.margin>
+                  <Insets top="5.0" />
+               </HBox.margin>
+            </Label>
+            <TextField fx:id="portaInvio" prefHeight="25.0" prefWidth="98.0" text="3200">
+               <HBox.margin>
+                  <Insets right="20.0" top="10.0" />
+               </HBox.margin>
+            </TextField>
+            <Label prefHeight="32.0" prefWidth="90.0" text="Porta Ricezione">
+               <HBox.margin>
+                  <Insets top="5.0" />
+               </HBox.margin>
+            </Label>
+            <TextField fx:id="portaRicezione" prefHeight="25.0" prefWidth="98.0" text="3201">
+               <HBox.margin>
+                  <Insets top="10.0" />
+               </HBox.margin>
+            </TextField>
+            <Button mnemonicParsing="false" prefHeight="43.0" prefWidth="123.0" text="Aggiorna" onMouseClicked="#aggiorna"/>
+         </children>
+      </HBox>
+      <VBox prefHeight="435.0" prefWidth="871.0">
+         <children>
+            <TabPane prefHeight="396.0" prefWidth="871.0" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab text="Utente1" />
+              </tabs>
+            </TabPane>
+         </children></VBox>
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <TextArea prefHeight="60.0" prefWidth="585.0" />
+            <Button mnemonicParsing="false" onMouseClicked="#invia" prefHeight="60.0" prefWidth="287.0" text="Invia" />
+         </children>
+      </HBox>
+   </children>
+</VBox>

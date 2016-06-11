@@ -1,6 +1,4 @@
-package src.Util;
-
-import java.math.BigInteger;
+package Util;
 
 /**
  * Created by Gioele on 09/06/2016.

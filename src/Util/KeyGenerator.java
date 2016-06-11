@@ -1,6 +1,4 @@
-package src.Util;
-
-import javafx.beans.binding.StringBinding;
+package Util;
 
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
@@ -23,6 +21,8 @@ public class KeyGenerator {
     private BigInteger N;
     private BigInteger E;
     private BigInteger D;
+
+    private ChiavePubblicaInterlocutore chiavePubblicaInterlocutore = null;
 
 
 
@@ -171,5 +171,11 @@ public class KeyGenerator {
         return lunghezza;
     }
 
+    public ChiavePubblicaInterlocutore getChiavePubblicaInterlocutore() {
+        return chiavePubblicaInterlocutore;
+    }
 
+    public void setChiavePubblicaInterlocutore(ChiavePubblicaInterlocutore chiavePubblicaInterlocutore) {
+        this.chiavePubblicaInterlocutore = chiavePubblicaInterlocutore;
+    }
 }

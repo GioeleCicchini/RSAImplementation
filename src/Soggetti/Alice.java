@@ -1,6 +1,6 @@
 package Soggetti;
 
-import src.Util.KeyGenerator;
+import Util.KeyGenerator;
 
 import java.math.BigInteger;
 import java.util.List;

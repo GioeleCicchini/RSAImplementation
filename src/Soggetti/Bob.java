@@ -1,7 +1,6 @@
 package Soggetti;
 
-import src.Util.KeyGenerator;
-import src.Util.MillerRabin;
+import Util.KeyGenerator;
 
 import java.math.BigInteger;
 import java.util.*;

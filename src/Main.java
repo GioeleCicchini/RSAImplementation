@@ -1,10 +1,8 @@
-package src;
-
 import Soggetti.Alice;
 import Soggetti.Bob;
-import src.Util.KeyGenerator;
-import src.Util.MessageGenerator;
-import src.Util.NumericTextDecripter;
+import Util.KeyGenerator;
+import Util.MessageGenerator;
+import Util.NumericTextDecripter;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -12,6 +10,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+
 
 /**
  * Created by Gioele on 09/06/2016.
@@ -22,9 +21,10 @@ public class Main  {
     public static void main(String [] args) throws IOException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 
 
+
+
+
         KeyGenerator GeneratoreChiavi = KeyGenerator.getSingletonInstance();
-
-
 
 
         if(new File("ChiavePrivata.bin").exists()){
