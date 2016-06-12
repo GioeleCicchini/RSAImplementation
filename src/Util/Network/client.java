@@ -20,13 +20,19 @@ public class client   {
 
     public void inviaAlServer(DTO dto) throws IOException {
 
-        Socket clientSocket = new Socket("localhost", Integer.parseInt(Configuration.getSingletonInstance().getPortaClient()));
+        Socket clientSocket = new Socket(Configuration.getSingletonInstance().getIndirizzoIp(), Integer.parseInt(Configuration.getSingletonInstance().getPortaClient()));
         try {
             System.out.println("Invio qualcosa al server");
             ObjectOutputStream objectOutput = new ObjectOutputStream(clientSocket.getOutputStream());
             objectOutput.writeObject(dto);
 
+            ObjectInputStream objectInputStream = new ObjectInputStream(clientSocket.getInputStream());
+
+            DTO risp = (DTO) objectInputStream.readObject();
+
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } finally {
             clientSocket.close();

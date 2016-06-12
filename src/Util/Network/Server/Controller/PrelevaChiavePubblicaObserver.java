@@ -11,14 +11,17 @@ public class PrelevaChiavePubblicaObserver implements Observer  {
     @Override
     public void update(ControllerFacade controller) {
 
+        if(controller.getFunzione().equals("PrelevaChiavePubblica")) {
 
-        DTO dto ;
+            DTO dto;
 
-        dto = DTOMaker.getSingletonInstance().inviaChiavePubblicaPersanale();
+            dto = DTOMaker.getSingletonInstance().inviaChiavePubblicaPersanale();
 
-        RispostaMaker.getSingletonInstance().ImmettiRisposta(dto);
+            RispostaMaker.getSingletonInstance().ImmettiRisposta(dto);
 
-        System.out.println("prelevo la chiave pubblica");
+            System.out.println("prelevo la chiave pubblica");
+
+        }
 
     }
 }

@@ -11,6 +11,7 @@ public class Configuration {
     private static Configuration singletonInstance = null;
     private String portaServer;
     private String portaClient;
+    private String indirizzoIp;
 
     public Configuration() {
     }
@@ -37,5 +38,14 @@ public class Configuration {
 
     public void setPortaClient(String portaClient) {
         this.portaClient = portaClient;
+    }
+
+
+    public String getIndirizzoIp() {
+        return indirizzoIp;
+    }
+
+    public void setIndirizzoIp(String indirizzoIp) {
+        this.indirizzoIp = indirizzoIp;
     }
 }

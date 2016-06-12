@@ -1,5 +1,6 @@
 package Util;
 
+
 import java.io.*;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -12,8 +13,24 @@ public class MessageGenerator {
 
 
     String messaggio;
+    private static MessageGenerator singletonInstance = null;
 
     public MessageGenerator() {}
+
+
+
+    public static MessageGenerator getSingletonInstance() {
+        if (singletonInstance == null) {
+            singletonInstance = new MessageGenerator();
+        }
+        return singletonInstance;
+    }
+
+
+
+
+
+
 
 
     public void importaDaFile() throws IOException {
