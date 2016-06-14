@@ -46,7 +46,7 @@ public class client   {
         DTO dto = DTOMaker.getSingletonInstance().getChiavePubblicaInterlocutore();
 
 
-        Socket clientSocket = new Socket("localhost", Integer.parseInt(Configuration.getSingletonInstance().getPortaClient()));
+        Socket clientSocket = new Socket(Configuration.getSingletonInstance().getIndirizzoIp(), Integer.parseInt(Configuration.getSingletonInstance().getPortaClient()));
         try {
             System.out.println("Invio qualcosa al server");
             ObjectOutputStream objectOutput = new ObjectOutputStream(clientSocket.getOutputStream());
