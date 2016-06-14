@@ -12,17 +12,17 @@ import java.util.*;
 public class KeyGenerator {
 
     private static final BigInteger ZERO = BigInteger.ZERO;
-    private static final BigInteger n = new BigInteger("1000000000000000000000000000000000");
+    private static final BigInteger n = new BigInteger("100");
 
     private static KeyGenerator singletonInstance = null;
 
-    private BigInteger P;
-    private BigInteger Q;
-    private BigInteger N;
-    private BigInteger E;
-    private BigInteger D;
+    private static BigInteger P;
+    private static BigInteger Q;
+    private static BigInteger N;
+    private static BigInteger E;
+    private static BigInteger D;
 
-    private ChiavePubblicaInterlocutore chiavePubblicaInterlocutore = null;
+    private static ChiavePubblicaInterlocutore chiavePubblicaInterlocutore = null;
 
 
 
@@ -80,7 +80,7 @@ public class KeyGenerator {
 
 
 
-    public Map<String,BigInteger> getChiavePrivata(){
+    public static Map<String,BigInteger> getChiavePrivata(){
 
         Map<String,BigInteger> chiavePrivata = new HashMap<>();
 
@@ -91,7 +91,7 @@ public class KeyGenerator {
 
     }
 
-    public Map<String,BigInteger> getChiavePubblica(){
+    public static Map<String,BigInteger> getChiavePubblica(){
 
         Map<String,BigInteger> chiavePubblica = new HashMap<>();
 
@@ -171,7 +171,7 @@ public class KeyGenerator {
         return lunghezza;
     }
 
-    public ChiavePubblicaInterlocutore getChiavePubblicaInterlocutore() {
+    public static ChiavePubblicaInterlocutore getChiavePubblicaInterlocutore() {
         return chiavePubblicaInterlocutore;
     }
 

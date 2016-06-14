@@ -1,6 +1,7 @@
 package Util.Network.Server;
 
 import Util.Network.Server.Controller.ControllerFacade;
+import Util.Network.Server.Controller.FirmaObserver;
 import Util.Network.Server.Controller.PrelevaChiavePubblicaObserver;
 import Util.Network.Server.Controller.RiceviMessaggioObserver;
 
@@ -21,7 +22,7 @@ public class server{
 
         controllerFacade.Attach(new PrelevaChiavePubblicaObserver());
         controllerFacade.Attach(new RiceviMessaggioObserver());
-
+        controllerFacade.Attach(new FirmaObserver());
 
 
 

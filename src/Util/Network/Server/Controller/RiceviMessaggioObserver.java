@@ -1,12 +1,13 @@
 package Util.Network.Server.Controller;
 
 import Ui.Chat.MessaggiChat;
+import Util.Attack.TestoChiaroCorto;
+import Util.KeyGenerator;
 import Util.Network.Server.RispostaMaker;
 import Util.Network.TransferObject.DTO;
 import Util.Network.TransferObject.DTOMaker;
 import Util.NumericTextDecripter;
 import Util.RSACripterDecripter;
-import Util.TextNumericEncripter;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -21,6 +22,10 @@ public class RiceviMessaggioObserver implements Observer {
         if(controller.getFunzione().equals("MessaggioInterlocutore")) {
 
             List<BigInteger> pezzi = (List)controller.getOggettiPersistenti().get(0);
+
+
+
+            System.out.println(KeyGenerator.getSingletonInstance().getChiavePrivata());
 
             String messaggio = RSACripterDecripter.getSingletonInstance().Decripta(pezzi);
 

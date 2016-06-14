@@ -65,5 +65,28 @@ public class DTOMaker {
 
     }
 
+    public DTO richiediFirma(List<BigInteger> messaggio){
+        DTO dto = new DTO();
+
+        dto.setFunzione("FirmaRichiesta");
+
+        dto.aggiungiOggettoTrasferimento((Serializable) messaggio);
+
+        return dto;
+
+    }
+
+    public DTO firmaInviata(List<BigInteger> messaggio){
+        DTO dto = new DTO();
+
+        dto.setFunzione("FirmaInviata");
+
+        dto.aggiungiOggettoTrasferimento((Serializable) messaggio);
+
+        return dto;
+
+    }
+
+
 
 }
