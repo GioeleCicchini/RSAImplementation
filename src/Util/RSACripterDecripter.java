@@ -37,7 +37,13 @@ public class RSACripterDecripter {
         List<BigInteger> messaggioCifratoBlocchi = new ArrayList<>();
 
         for(int i=0;i<messaggioNumericoBlocchi.size();i++){
-            BigInteger messaggioCifratoBlocco = messaggioNumericoBlocchi.get(i).modPow(chiave.getChiavePubblicaInterlocutore().get("E"), chiave.getChiavePubblicaInterlocutore().get("N"));
+            BigInteger messaggioCifratoBlocco;
+            if(chiave.getChiavePubblicaInterlocutore().get("E") != null) {
+                 messaggioCifratoBlocco = messaggioNumericoBlocchi.get(i).modPow(chiave.getChiavePubblicaInterlocutore().get("E"), chiave.getChiavePubblicaInterlocutore().get("N"));
+            }
+            else {
+                messaggioCifratoBlocco = messaggioNumericoBlocchi.get(i).modPow(chiave.getChiavePubblicaInterlocutore().get("D"), chiave.getChiavePubblicaInterlocutore().get("N"));
+            }
 
             messaggioCifratoBlocchi.add(messaggioCifratoBlocco);
 

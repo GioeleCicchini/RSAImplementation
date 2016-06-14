@@ -2,6 +2,9 @@ package Ui.Controllers;
 
 import Ui.Chat.MessaggiChat;
 import Util.*;
+import Util.Attack.Frazione;
+import Util.Attack.FrazioneContinua;
+import Util.Attack.TestoChiaroCorto;
 import Util.Network.Configuration;
 import Util.Network.TransferObject.DTO;
 import Util.Network.TransferObject.DTOMaker;
@@ -24,9 +27,14 @@ import javafx.scene.paint.Paint;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.RoundingMode;
 import java.net.URL;
+import java.security.Key;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 /**
@@ -90,6 +98,12 @@ public class controller implements Initializable {
             }
         }
 
+        Map<String,BigInteger> chiavePub = new HashMap<>();
+
+        chiavePub.put("E",new BigInteger("323815174542919"));
+        chiavePub.put("N", new BigInteger("1966981193543797"));
+
+        KeyGenerator.getSingletonInstance().setChiavePubblica(chiavePub);
 
     }
 
@@ -170,4 +184,33 @@ public class controller implements Initializable {
 
     }
 
+    public void attacca(Event event) throws IOException {
+
+        FrazioneContinua frazione = new FrazioneContinua();
+
+
+        frazione.calcolaFrazioneContinua(KeyGenerator.getChiavePubblica().get("E"),KeyGenerator.getChiavePubblica().get("N"));
+
+        List<BigInteger> frazionecontinuaCifre = frazione.getFrazioneContinuaCifre();
+
+        for(int i=2 ; i<frazionecontinuaCifre.size();i++) {
+            Frazione frazioneIniziale = new Frazione(BigInteger.ONE, frazionecontinuaCifre.get(i));
+
+            frazione.OttieniFrazione(i, frazioneIniziale);
+
+            BigInteger parziale= KeyGenerator.getChiavePubblica().get("E").multiply(frazione.getFrazionecercata().get_denominatore()).subtract(BigInteger.ONE);
+
+            BigDecimal num = new BigDecimal(parziale.toString());
+            BigDecimal den = new BigDecimal(frazione.getFrazionecercata().get_numeratore());
+
+            if(den.compareTo(BigDecimal.ZERO) != 0) {
+                BigDecimal C = num.divide(den,50, RoundingMode.UP);
+                System.out.println(C);
+            }
+
+
+        }
+
+
+    }
 }

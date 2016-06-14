@@ -20,6 +20,7 @@ public class client   {
 
     public void inviaAlServer(DTO dto) throws IOException {
 
+
         Socket clientSocket = new Socket(Configuration.getSingletonInstance().getIndirizzoIp(), Integer.parseInt(Configuration.getSingletonInstance().getPortaClient()));
         try {
             System.out.println("Invio qualcosa al server");
@@ -72,6 +73,7 @@ public class client   {
 
 
 
-    }
+
+}
 
 
