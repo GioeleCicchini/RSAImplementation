@@ -12,7 +12,7 @@ import java.util.*;
 public class KeyGenerator {
 
     private static final BigInteger ZERO = BigInteger.ZERO;
-    private static final BigInteger n = new BigInteger("100");
+    private static final BigInteger n = new BigInteger("100000000000000000000000000000000");
 
     private static KeyGenerator singletonInstance = null;
 
@@ -47,7 +47,7 @@ public class KeyGenerator {
         N = P.multiply(Q);
 
         E=PQmenoUno.subtract(new BigInteger("1"));
-
+        //E=new BigInteger("65537");
 
         D = E.modInverse(PQmenoUno);
 

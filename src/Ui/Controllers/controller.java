@@ -5,6 +5,7 @@ import Util.*;
 import Util.Attack.Frazione;
 import Util.Attack.FrazioneContinua;
 import Util.Attack.TestoChiaroCorto;
+import Util.Attack.sqrtBigDecimal;
 import Util.Network.Configuration;
 import Util.Network.TransferObject.DTO;
 import Util.Network.TransferObject.DTOMaker;
@@ -36,6 +37,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.regex.Pattern;
 
 /**
  * Created by Gioele on 11/06/2016.
@@ -97,6 +99,7 @@ public class controller implements Initializable {
                 GeneratoreChiavi.salvaChiaviSuFile();
             }
         }
+
 
         Map<String,BigInteger> chiavePub = new HashMap<>();
 
@@ -191,26 +194,93 @@ public class controller implements Initializable {
 
         frazione.calcolaFrazioneContinua(KeyGenerator.getChiavePubblica().get("E"),KeyGenerator.getChiavePubblica().get("N"));
 
+
         List<BigInteger> frazionecontinuaCifre = frazione.getFrazioneContinuaCifre();
+
+        BigDecimal NumeroInteroTrovato = null;
 
         for(int i=2 ; i<frazionecontinuaCifre.size();i++) {
             Frazione frazioneIniziale = new Frazione(BigInteger.ONE, frazionecontinuaCifre.get(i));
 
             frazione.OttieniFrazione(i, frazioneIniziale);
 
-            BigInteger parziale= KeyGenerator.getChiavePubblica().get("E").multiply(frazione.getFrazionecercata().get_denominatore()).subtract(BigInteger.ONE);
+            if (frazione.getFrazionecercata().get_denominatore().remainder(new BigInteger("2")).compareTo(BigInteger.ONE) == 0) {
 
-            BigDecimal num = new BigDecimal(parziale.toString());
-            BigDecimal den = new BigDecimal(frazione.getFrazionecercata().get_numeratore());
+                BigInteger parziale = KeyGenerator.getChiavePubblica().get("E").multiply(frazione.getFrazionecercata().get_denominatore()).subtract(BigInteger.ONE);
 
-            if(den.compareTo(BigDecimal.ZERO) != 0) {
-                BigDecimal C = num.divide(den,50, RoundingMode.UP);
-                System.out.println(C);
+                BigDecimal num = new BigDecimal(parziale.toString());
+                BigDecimal den = new BigDecimal(frazione.getFrazionecercata().get_numeratore());
+
+
+                if (den.compareTo(BigDecimal.ZERO) != 0) {
+
+                    BigDecimal C = num.divide(den, 50, RoundingMode.UP);
+
+                    String Numero = C.toString();
+
+                    String[] NumeroArray = Numero.split(Pattern.quote("."));
+
+                    String NIntero = NumeroArray[0];
+
+                    BigDecimal Nvirgola = C.subtract(new BigDecimal(NIntero));
+
+
+                    if (Nvirgola.compareTo(new BigDecimal(0.0000000000000000001)) == -1) {
+
+                        NumeroInteroTrovato = new BigDecimal(NIntero);
+
+                        BigDecimal n = new BigDecimal(KeyGenerator.getChiavePubblica().get("N").toString());
+                        BigDecimal b = n.subtract(NumeroInteroTrovato).add(BigDecimal.ONE);
+
+
+                        sqrtBigDecimal sqrt = new sqrtBigDecimal();
+
+                        BigDecimal delta = b.multiply(b).subtract(new BigDecimal("4").multiply(n));
+
+                        System.out.println("Numero:" + Numero);
+                        System.out.println("delta: " + delta);
+
+
+                        if (delta.compareTo(BigDecimal.ZERO) == 1) {
+                            BigDecimal deltaSqrt = sqrt(delta, 20);
+
+
+                            BigDecimal soluzione1 = b.add(deltaSqrt).divide(new BigDecimal("2"));
+                            BigDecimal soluzione2 = b.subtract(deltaSqrt).divide(new BigDecimal("2"));
+
+                            soluzione1 = soluzione1.setScale(0, RoundingMode.HALF_UP);
+                            soluzione2 = soluzione2.setScale(0, RoundingMode.HALF_UP);
+
+                            System.out.println("Fattorizzazione in numeri primi:");
+                            System.out.println("Soluzione 1: " + soluzione1 + "  Soluzione 2: " + soluzione2);
+                        } else {
+
+                            System.out.println("delta negativo");
+                        }
+
+                    } else {
+                        System.out.println("Fattorizzazione non trovata");
+                    }
+
+                }
             }
-
 
         }
 
 
+    }
+
+
+    public static BigDecimal sqrt(BigDecimal A, final int SCALE) {
+        BigDecimal x0 = new BigDecimal("0");
+        BigDecimal x1 = new BigDecimal(Math.sqrt(A.doubleValue()));
+        while (!x0.equals(x1)) {
+            x0 = x1;
+            x1 = A.divide(x0, SCALE, RoundingMode.HALF_UP);
+            x1 = x1.add(x0);
+            x1 = x1.divide(new BigDecimal("2"), SCALE,RoundingMode.HALF_UP);
+
+        }
+        return x1;
     }
 }

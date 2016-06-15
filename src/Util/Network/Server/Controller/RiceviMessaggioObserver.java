@@ -23,15 +23,22 @@ public class RiceviMessaggioObserver implements Observer {
 
             List<BigInteger> pezzi = (List)controller.getOggettiPersistenti().get(0);
 
+            String messaggioCriptato = "";
+            for(int i=0;i<pezzi.size();i++){
+                messaggioCriptato = messaggioCriptato + pezzi.get(i);
+            }
+
+            System.out.println("Chiave Privata : "+KeyGenerator.getSingletonInstance().getChiavePrivata());
+            System.out.println("Messaggio Crittato :   "+messaggioCriptato);
 
 
-            System.out.println(KeyGenerator.getSingletonInstance().getChiavePrivata());
+
 
             String messaggio = RSACripterDecripter.getSingletonInstance().Decripta(pezzi);
 
             NumericTextDecripter numericTextDecripter = new NumericTextDecripter(messaggio);
 
-            System.out.println(numericTextDecripter.getMessaggioDecriptatoStringa());
+            System.out.println("Messaggio Decrittato :   "+numericTextDecripter.getMessaggioDecriptatoStringa());
 
             DTO dto = DTOMaker.getSingletonInstance().inviaChiavePubblicaPersanale();
             RispostaMaker.getSingletonInstance().ImmettiRisposta(dto);

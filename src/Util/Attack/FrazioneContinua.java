@@ -23,8 +23,8 @@ public class FrazioneContinua {
 
     public List<BigInteger> calcolaFrazioneContinua(BigInteger e,BigInteger  n){
 
-        System.out.println(e);
-        System.out.println(n);
+        System.out.println("E : "+e);
+        System.out.println("N : "+n);
        BigDecimal Nvirgola;
 
         String eString = e.toString();
@@ -52,7 +52,6 @@ public class FrazioneContinua {
 
        calcolaIterazione(Nvirgola,1);
 
-        System.out.println(frazioneContinuaCifre);
 
         return frazioneContinuaCifre;
     }
@@ -61,7 +60,7 @@ public class FrazioneContinua {
 
     public void calcolaIterazione(BigDecimal i,int j){
 
-        if(j<100 && (i.compareTo(new BigDecimal(0.00009)) == 1)) {
+        if(j<100 && (i.compareTo(new BigDecimal(0.000000000000009)) == 1)) {
 
 
             BigDecimal DecimalNumer = new BigDecimal(i.toString());
@@ -80,6 +79,8 @@ public class FrazioneContinua {
             Nvirgola = Nvirgola.subtract(new BigDecimal(NIntero));
 
             Frazione ultimaFrazione = new Frazione(BigInteger.ONE,intero);
+
+
 
 
 /*
@@ -109,6 +110,7 @@ public class FrazioneContinua {
             frazioneFine = new Frazione(frazionesomma.get_denominatore(),frazionesomma.get_numeratore());
 
             frazionecercata = frazioneFine;
+
 
             OttieniFrazione(j,frazioneFine);
 
